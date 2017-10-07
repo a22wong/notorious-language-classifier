@@ -1,0 +1,142 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt]{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements
+\usepackage[margin=1in]{geometry}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\usepackage{multicol}
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Notorious Language Classifier}\\ \Large{COMP 551: Applied Machine Learning}} % Title
+\author{\textbf{Team name: Notorious Language Classifiers}\\
+Thomas Page | thomas.page@mail.mcgill.ca | 260771672 \\
+David Tamrazov | david.tamrazov@mail.mcgill.ca | 260561439 \\
+Alexander Wong | alexander.wong4@mail.mcgill.ca | 260602944} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+\maketitle % Insert the title, author and date
+
+% If you wish to include an abstract, uncomment the lines below
+%\begin{abstract}
+%
+%\end{abstract}
+
+\begin{center}
+Kaggle: \texttt{https://www.kaggle.com}
+\end{center}
+
+\begin{multicols}{2}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+%briefly describe the problem and summarize your approach (1 paragraph)
+
+%\paragraph{}
+%\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+
+\section{Related Work} 
+%previous literature related to text classification problem (max. 1?2 page)
+
+%\paragraph{}
+%\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 3
+%----------------------------------------------------------------------------------------
+
+\section{Problem Representation}
+%Algorithm selection and implementation (for each of the categories above).
+%You do not need to include details that are in the class notes (e.g. SVM derivation, etc.), unless necessary to understand other details. Include any decisions about training/validation split, distribution choice for naïve bayes, regularization strategy, any optimization tricks, setting hyper-parameters, etc.
+
+\paragraph{Data Pre-Processing Methods}
+
+\paragraph{Feature Design Methods}
+
+\paragraph{Feature Selection Methods}
+%\paragraph{}
+%\paragraph{}
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+
+\section{Testing and Validation}
+%detailed analysis of your results, outside of Kaggle
+
+%\paragraph{}
+%\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
+
+\section{Discussion}
+%pros/cons of your approach & methodology
+
+%\paragraph{}
+%\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 6
+%----------------------------------------------------------------------------------------
+
+\section{Statement of Contributions}
+We hereby state that all the work presented in this report is that of the authors.
+%\paragraph{}
+%\paragraph{}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+%\section{Bibliography}
+
+
+\bibliographystyle{apalike}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+\end{multicols}
+\end{document}

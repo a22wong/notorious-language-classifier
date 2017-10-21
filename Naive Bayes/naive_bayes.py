@@ -3,6 +3,10 @@
 # October 2017
 
 import csv
+import itertools
+import numpy as np
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -10,7 +14,7 @@ def main():
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
 
-    dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, testing_x)
+    dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, training_x)
     # print type(dataset_y[1])
 
     probability_of_classes = probability_class(dataset_y)
@@ -24,9 +28,17 @@ def main():
     # Percent correct on trainging set (ignore for testing):
 
     truth = [el[1] for el in dataset_y[1:]]
+    print(truth[:10])
+    print(predictions[:10])
+    confusion = confusion_matrix(truth, predictions)
+
+    plt.figure()
+    plot_confusion_matrix(confusion, classes=['Slovak', 'French', 'Spanish', 'German', 'Polish'], normalize=True, title='Confusion Matrix')
+    print(confusion)
     correct = [i for i, j in zip(predictions, truth) if i == j]
     percent_correct = float(len(correct)) / float(len(predictions))
     print(percent_correct)
+    plt.show()
 
 
 def loadCsv(training_x, training_y, testing_x):
@@ -75,11 +87,11 @@ def probability_class(dataset_y):
 
 
 def probability_languages(dataset_x, dataset_y):
-    slovak = []    # 0
-    french = []    # 1
-    spanish = []   # 2
-    german = []    # 3
-    polish = []    # 4
+    slovak = []     # 0
+    french = []     # 1
+    spanish = []    # 2
+    german = []     # 3
+    polish = []     # 4
 
     for i in range(1, len(dataset_x)):
         if dataset_y[i][1] == '0':
@@ -148,6 +160,41 @@ def classifier(testset_x, probability_of_languages, probability_of_classes):
             writer.writerow([str(i)] + [guesses[i]])
 
     return guesses
+
+
+def plot_confusion_matrix(cm, classes,
+                          normalize=False,
+                          title='Confusion matrix',
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
 
 
 if __name__ == '__main__':

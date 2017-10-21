@@ -367,49 +367,56 @@ https://github.com/a22wong/notorious-language-classifier\\
 
 
 \section{Introduction}
-% no \IEEEPARstart
 As a result of the first project, corpora in various languages are available to act as training sets for many language related machine learning tasks. The goal of this project is to create classifiers that can determine the language of a sample of text from corpora information developed in the first project. Based on a review of the methods discussed in COMP 551, we construct four classifiers: Naive Bayes, Linear Discriminant Analysis (LDA), Decision Trees, and Extremely Randomized Decision Trees.
 
+
+\section{Related Work}
+asdf
+
+
+\section{Problem Representation}
 The compiled training dataset contains 276516 labeled language samples from five different languages: Slovak, French, Spanish, German, and Polish. The test set contains 118507 unlabeled samples of zero to ten individual characters. This presented the challenge of classifying seemingly nonsensical data; a common task in practical machine learning.
 
-Fig. 1 
+Fig. 1 represents the amount each language is present in the training set. 
 
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=70mm]{fig1.png}}
-\caption{Training Set Language Distribution.}
+\centering
+\includegraphics[width=70mm]{class_distribution.png}
+\caption{Training set language distribution.}
 \label{fig}
 \end{figure}
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+
+\section{Testing and Validation}
+The most effective way to represent the performance metrics of each individual classifier is through their respective confusion matrix. We chose to evaluate our classifiers using a normalized confusion matrix as it highlights important outputs like the true positives and exactly how each class is correctly or incorrectly classified.
+
+\subsection{Naive Bayes}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=80mm]{confusion_bayes.png}
+\caption{Naive Bayes confusion matrix.}
+\label{fig}
+\end{figure}
+
+\subsection{Decision Trees}
+
+\subsection{Extremely Randomized Trees}
 
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+\section{Discussion}
+asdf
 
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
+\section{Statement of Contributions}
+Thomas was responsible for fully implementing the Naive Bayes classifier. He also wrote the outline of the report and any sections pertaining to Naive Bayes.
+
+Alex was responsible for fully implementing the Decision Trees classifier. For the report, he wrote any sections pertaining to Decision Trees.
+
+David was responsible for the LDA and Extremely Randomized Trees classifiers. For the report, he wrote any sections pertaining to LDA or Extremely Randomized Trees.
+
+We hereby state that all the work presented in this report is that of the authors.
+
+
 
 % Note that the IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
@@ -470,38 +477,6 @@ Subsubsection text here.
 %\hline
 %\end{tabular}
 %\end{table}
-
-
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
-
-
-
-
-\section{Conclusion}
-The conclusion goes here.
-
-
-
-
-% conference papers do not normally have an appendix
-
-
-% use section* for acknowledgment
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-
-
-
 
 
 % trigger a \newpage just before the given reference

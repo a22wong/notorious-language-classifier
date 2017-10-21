@@ -20,17 +20,6 @@ def main():
     probability_of_classes = probability_class(dataset_y)
     print(probability_of_classes)
 
-    # Data to plot
-    labels = 'Slovak', 'French', 'Spanish', 'German', 'Polish'
-    sizes = [probability_of_classes['0'], probability_of_classes['1'], probability_of_classes['2'], probability_of_classes['3'], probability_of_classes['4']]
-    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-
-    # Plot
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
-
-    plt.axis('equal')
-    plt.show()
-
     slovak, french, spanish, german, polish = probability_languages(dataset_x, dataset_y)
     probability_of_languages = [slovak, french, spanish, german, polish]
 

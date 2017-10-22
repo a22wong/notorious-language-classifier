@@ -1,20 +1,45 @@
 # Alex Wong
 # 260602944
 # COMP 551 Project 2
-
+import csv
+import itertools
+import numpy as np
+import codecs
+import re
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 
 def main():
-	training_x = '../Data/train_set_x.csv'
+    training_x = '../Data/train_set_x.csv'
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
 
+    # pre-process data
     dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, testing_x)
-
+    probability_of_classes = probability_class(dataset_y)
     special_chars = getSpecialChars(training_x, dataset_y)
-
-    # slovak_spec_chars, french_spec_chars, spanish_spec_chars, german_spec_chars, polish_spec_chars = getSpecCharsForLangs(special_chars)
-
     classified_sc = classifySpecialChars(special_chars)
+    slovak, french, spanish, german, polish = probability_languages(dataset_x, dataset_y)
+    probability_of_languages = [slovak, french, spanish, german, polish]
+    
+    # make predicitons!
+    predictions = classify(testset_x, classified_sc, probability_of_languages, probability_of_classes)
+
+    truth = [el[1] for el in dataset_y[1:]]
+    # print(truth[:10])
+    # print(predictions[:10])
+    # confusion = confusion_matrix(truth, predictions)
+
+    # plt.figure()
+    # plot_confusion_matrix(confusion, classes=['Slovak', 'French', 'Spanish', 'German', 'Polish'], normalize=True, title='Confusion Matrix')
+    # print(confusion)
+    correct = [i for i, j in zip(predictions, truth) if i == j]
+    percent_correct = float(len(correct)) / float(len(predictions))
+    print(percent_correct)
+    # plt.show()
 
 def loadCsv(training_x, training_y, testing_x):
     print "Loading from csv..."
@@ -44,6 +69,8 @@ def getSpecialChars(training_x, dataset_y):
         line_nb = -1
         for line in data_x:
             line_nb += 1
+            sys.stdout.write("\rProgress: %d" % (line_nb))
+            sys.stdout.flush()
             for i in range(len(line)):
                 if re.match(unicode_regex, line[i]):
                     if not line[i] in special_chars:
@@ -57,13 +84,14 @@ def getSpecialChars(training_x, dataset_y):
 
 def classifySpecialChars(special_chars):
     print "Classifying special characters..."
+    # {'1': 462, '0': 41, '3': 34, '2': 240, '4': 41}
     slovak = []    # 0
     french = []    # 1
     spanish = []   # 2
     german = []    # 3
     polish = []    # 4
 
-	for c in special_chars:
+    for c in special_chars:
 		if '0' in special_chars[c]:
 			slovak.append(c)
 		if '1' in special_chars[c]:
@@ -75,7 +103,7 @@ def classifySpecialChars(special_chars):
 		if '4' in special_chars[c]:
 			polish.append(c)
 
-	return [slovak, french, spanish, german, polish]
+    return [slovak, french, spanish, german, polish]
 
 def count_words(words):
     print "Counting words..."
@@ -132,19 +160,21 @@ def probability_languages(dataset_x, dataset_y):
 
     return slovak_, french_, spanish_, german_, polish_
 
-def classify(testset_x, classified_sc, probability_of_classes):
+def classify(testset_x, classified_sc, probability_of_languages, probability_of_classes):
     print "Classifying..."
-	guesses = []
+    guesses = []
 
-	testset = [[] for i in range(len(testset_x))]
+    testset = [[] for i in range(len(testset_x))]
 
     for i in range(1, len(testset_x)):
         testset[i] += testset_x[i][1]#.lower()
         testset[i] = [x for x in testset[i] if x != ' ']
 
     for test_line in range(1, len(testset_x)):
+        sys.stdout.write("\rProgress: %d" % (test_line))
+        sys.stdout.flush()
         temp_probability = probability_of_classes.copy()
-        special_count_by_class = {'0':0, '1':0,'2':0,'3':0,'4':0}
+        classified_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
         naive = 1
     	for test_char in testset[test_line]:
     		# TODO: initialize list for each lang's special chars for branching
@@ -156,39 +186,40 @@ def classify(testset_x, classified_sc, probability_of_classes):
 
 
             # decision tree approach
+
     		# slovak
-    		# if test_char in special_chars_langs[0]:
-      #           special_count_by_class['0'] += 1
-      #           naive = 0
-    		# 	# guesses.append(0)
-    		# # french
-    		# elif test_char in special_chars_langs[1]:
-      #           special_count_by_class['1'] += 1
-      #           naive = 0
-    		# 	# guesses.append(1)
-    		# # spanish
-    		# elif test_char in special_chars_langs[2]:
-      #           special_count_by_class['2'] += 1
-      #           naive = 0
-    		# 	# guesses.append(2)
-    		# # german
-    		# elif test_char in special_chars_langs[3]:
-      #           special_count_by_class['3'] += 1
-      #           naive = 0
-    		# 	# guesses.append(3)
-    		# # polish
-    		# elif test_char in special_chars_langs[4]:
-      #           special_count_by_class['4'] += 1
-      #           naive = 0
-    		# 	# guesses.append(4)
-    		# default: naive bayes
-    		else:
-                for l in range(len(probability_languages)):
+    		if test_char in classified_sc['0']:
+                classified_sc_counts['1'] += 1
+                naive = 0
+    			# guesses.append('1')
+    		# french
+    		elif test_char in classified_sc['1']:
+                classified_sc_counts['2'] += 1
+                naive = 0
+    			# guesses.append('2')
+    		# spanish
+    		elif test_char in classified_sc['2']:
+                classified_sc_counts['0'] += 1
+                naive = 0
+    			# guesses.append('0')
+    		# german
+    		elif test_char in classified_sc['3']:
+                classified_sc_counts['4'] += 1
+                naive = 0
+    			# guesses.append('4')
+    		# polish
+    		elif test_char in classified_sc['4']:
+                classified_sc_counts['3'] += 1
+                naive = 0
+    			# guesses.append('3')
+    		default: naive bayes
+            else:
+                for l in range(len(probability_of_languages)):
                     # pre-naive bayes filtering approach
-                    if test_char in special_chars_langs[l]:
-                        special_count_by_class[l] += 1
-                        naive = 0
-                    if i in probability_languages[l]:
+                    # if test_char in classified_sc[l]:
+                    #     classified_sc_counts[l] += 1
+                    #     naive = 0
+                    if i in probability_of_languages[l]:
                          temp_probability[str(l)] *= probability_of_languages[l][i]
                     else:
                         temp_probability[str(l)] *= probability_of_languages[l]['not_present']
@@ -197,7 +228,7 @@ def classify(testset_x, classified_sc, probability_of_classes):
         if naive:
             guesses.append(max(temp_probability, key=temp_probability.get))
         else:
-            guesses.append(max(special_count_by_class, key=special_count_by_class.get))
+            guesses.append(max(classified_sc_counts, key=classified_sc_counts.get))
             # needs tie-breaker with temp_probability --> separate function
 
     # write out
@@ -208,6 +239,40 @@ def classify(testset_x, classified_sc, probability_of_classes):
             writer.writerow([str(i)] + [guesses[i]])
 
     return guesses
+
+def plot_confusion_matrix(cm, classes,
+                          normalize=False,
+                          title='Confusion matrix',
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
 
 if __name__ == '__main__':
     main()

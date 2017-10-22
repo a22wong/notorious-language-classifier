@@ -16,7 +16,7 @@ def main():
     # regex for non-ascii chars
     unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
 
-    # printCsv(special_chars)
+    printCsv(special_chars)
     languages_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
     for c in special_chars:
         for l in languages_sc_counts:

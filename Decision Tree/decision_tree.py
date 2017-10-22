@@ -14,9 +14,10 @@ def main():
 
     # slovak_spec_chars, french_spec_chars, spanish_spec_chars, german_spec_chars, polish_spec_chars = getSpecCharsForLangs(special_chars)
 
-    spec_chars_langs = getSpecCharsForLangs(special_chars)
+    classified_sc = classifySpecialChars(special_chars)
 
 def loadCsv(training_x, training_y, testing_x):
+    print "Loading from csv..."
     with open(training_x) as data_x:
         reader_x = csv.reader(data_x)
         dataset_x = list(reader_x)
@@ -34,6 +35,7 @@ def loadCsv(training_x, training_y, testing_x):
     return dataset_x, dataset_y, testset_x
 
 def getSpecialChars(training_x, dataset_y):
+    print "Getting special characters..."
 	# open training set with utf-8 encoding to indentify special chars
 	# special_chars: dictionary {key=special_char, value=list of associated languages}
     unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
@@ -53,28 +55,30 @@ def getSpecialChars(training_x, dataset_y):
 
     return special_chars
 
-def getSpecCharsForLangs(special_chars):
-	slovak = []
-	french = []
-	spanish = []
-	german = []
-	polish = []
+def classifySpecialChars(special_chars):
+    print "Classifying special characters..."
+    slovak = []    # 0
+    french = []    # 1
+    spanish = []   # 2
+    german = []    # 3
+    polish = []    # 4
 
 	for c in special_chars:
 		if '0' in special_chars[c]:
 			slovak.append(c)
-		elif '1' in special_chars[c]:
+		if '1' in special_chars[c]:
 			french.append(c)
-		elif '2' in special_chars[c]:
+		if '2' in special_chars[c]:
 			spanish.append(c)
-		elif '3' in special_chars[c]:
+		if '3' in special_chars[c]:
 			german.append(c)
-		elif '4' in special_chars[c]:
+		if '4' in special_chars[c]:
 			polish.append(c)
 
 	return [slovak, french, spanish, german, polish]
 
 def count_words(words):
+    print "Counting words..."
     # Changing this line affects output:
     wc = {'not_present': 0.0}
     for word in words:
@@ -92,6 +96,7 @@ def count_words(words):
     return wc
 
 def probability_class(dataset_y):
+    print "Calculating class probability..."
     result = {}
     for i in range(1, len(dataset_y)):
         result[dataset_y[(i)][1]] = result.get(dataset_y[(i)][1], 0.0) + 1.0
@@ -100,6 +105,7 @@ def probability_class(dataset_y):
     return result
 
 def probability_languages(dataset_x, dataset_y):
+    print "Calculating language probability"
     slovak = []    # 0
     french = []    # 1
     spanish = []   # 2
@@ -126,7 +132,8 @@ def probability_languages(dataset_x, dataset_y):
 
     return slovak_, french_, spanish_, german_, polish_
 
-def classify(testset_x, special_chars_langs):
+def classify(testset_x, classified_sc, probability_of_classes):
+    print "Classifying..."
 	guesses = []
 
 	testset = [[] for i in range(len(testset_x))]
@@ -135,62 +142,72 @@ def classify(testset_x, special_chars_langs):
         testset[i] += testset_x[i][1]#.lower()
         testset[i] = [x for x in testset[i] if x != ' ']
 
-    for test_line in range(len(testset_x)):
-    # for test_line in range(1, len(testset_x)): # do i want to start at 0 or 1?
-    	for test_char in range(len(test_line)):
+    for test_line in range(1, len(testset_x)):
+        temp_probability = probability_of_classes.copy()
+        special_count_by_class = {'0':0, '1':0,'2':0,'3':0,'4':0}
+        naive = 1
+    	for test_char in testset[test_line]:
     		# TODO: initialize list for each lang's special chars for branching
     		# or use ~smarter~ lists of special chars for brancing
     		# if test_char appears in list, branch until leaf
 
     		# at least filter in order of which lang has largest coverage
+
+
+
+            # decision tree approach
     		# slovak
-    		if test_char in special_chars_langs[0]:
-    			guesses.append(0)
-    		# french
-    		elif test_char in special_chars_langs[1]:
-    			guesses.append(1)
-    		# spanish
-    		elif test_char in special_chars_langs[2]:
-    			guesses.append(2)
-    		# german
-    		elif test_char in special_chars_langs[3]:
-    			guesses.append(3)
-    		# polish
-    		elif test_char in special_chars_langs[4]:
-    			guesses.append(4)
+    		# if test_char in special_chars_langs[0]:
+      #           special_count_by_class['0'] += 1
+      #           naive = 0
+    		# 	# guesses.append(0)
+    		# # french
+    		# elif test_char in special_chars_langs[1]:
+      #           special_count_by_class['1'] += 1
+      #           naive = 0
+    		# 	# guesses.append(1)
+    		# # spanish
+    		# elif test_char in special_chars_langs[2]:
+      #           special_count_by_class['2'] += 1
+      #           naive = 0
+    		# 	# guesses.append(2)
+    		# # german
+    		# elif test_char in special_chars_langs[3]:
+      #           special_count_by_class['3'] += 1
+      #           naive = 0
+    		# 	# guesses.append(3)
+    		# # polish
+    		# elif test_char in special_chars_langs[4]:
+      #           special_count_by_class['4'] += 1
+      #           naive = 0
+    		# 	# guesses.append(4)
     		# default: naive bayes
     		else:
-    			# TODO: naive bayes
-    			naiveBayes(test_char)
+                for l in range(len(probability_languages)):
+                    # pre-naive bayes filtering approach
+                    if test_char in special_chars_langs[l]:
+                        special_count_by_class[l] += 1
+                        naive = 0
+                    if i in probability_languages[l]:
+                         temp_probability[str(l)] *= probability_of_languages[l][i]
+                    else:
+                        temp_probability[str(l)] *= probability_of_languages[l]['not_present']
 
-def naiveBayes(testline, probability_of_languages, probability_of_classes):
-	temp_probability = probability_of_classes.copy()
-	for l in range(len(probability_languages)):
-		if i in probability_languages[l]:
-			 temp_probability[str(l)] *= probability_of_languages[l][i]
+        # update prediction
+        if naive:
+            guesses.append(max(temp_probability, key=temp_probability.get))
         else:
-            temp_probability[str(l)] *= probability_of_languages[l]['not_present']
-    return max(temp_probability, key=temp_probability.get)
+            guesses.append(max(special_count_by_class, key=special_count_by_class.get))
+            # needs tie-breaker with temp_probability --> separate function
 
+    # write out
+    with open('predictions.csv', 'w') as csvoutput:
+        writer = csv.writer(csvoutput)
+        writer.writerow(['Id'] + ['Category'])
+        for i in range(0, len(guesses)):
+            writer.writerow([str(i)] + [guesses[i]])
 
-    # okay = [[] for i in range(len(testset_x))]
-
-    # for i in range(1, len(testset_x)):
-    #     okay[i] += testset_x[i][1].lower()
-    #     okay[i] = [x for x in okay[i] if x != ' ']
-
-    # guesses = []
-    # for m in range(1, len(testset_x)):
-    #     temp_probability = probability_of_classes.copy()
-    #     for l in range(0, len(probability_of_languages)):
-    #         for i in okay[m]:
-    #             if i in probability_of_languages[l]:
-    #                 temp_probability[str(l)] *= probability_of_languages[l][i]
-    #             else:
-    #                 temp_probability[str(l)] *= probability_of_languages[l]['not_present']
-
-    #     guesses.append(max(temp_probability, key=temp_probability.get))
-
+    return guesses
 
 if __name__ == '__main__':
     main()

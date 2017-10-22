@@ -16,10 +16,18 @@ def main():
     # regex for non-ascii chars
     unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
 
-    printCsv(special_chars)
+    # printCsv(special_chars)
+    languages_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
+    for c in special_chars:
+        for l in languages_sc_counts:
+            if l in special_chars[c]:
+                languages_sc_counts[l] += 1
+
+    print languages_sc_counts
 
 
 def loadCsv(training_x, training_y, testing_x):
+    print "Loading from csv..."
     with open(training_x) as data_x:
         reader_x = csv.reader(data_x)
         dataset_x = list(reader_x)
@@ -40,6 +48,7 @@ def loadCsv(training_x, training_y, testing_x):
     return dataset_x, dataset_y, testset_x
 
 def printCsv(data):
+    print "Printing to csv..."
     with open('special_chars.csv', 'wb') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(['Char', 'Slovak', 'French', 'Spanish', 'German', 'Polish'])
@@ -58,6 +67,7 @@ def printCsv(data):
     csv_file.close()
 
 def getSpecialChars(training_x, dataset_y):
+    print "Getting special characters..."
     # open training set with utf-8 encoding to indentify special chars
     # special_chars: dictionary {key=special_char, value=list of associated languages}
     unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
@@ -66,6 +76,8 @@ def getSpecialChars(training_x, dataset_y):
         line_nb = -1
         for line in data_x:
             line_nb += 1
+            sys.stdout.write("\rProgress: %d" % (line_nb))
+            sys.stdout.flush()
             # if line_nb > 1000:
             #     break
             # print line_nb

@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  22 OCT 2017 14:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  22 OCT 2017 13:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"COMP 551 Project 2 Report.tex"
-(./COMP 551 Project 2 Report.tex
+**Untitled.tex
+(./Untitled.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
@@ -127,8 +127,8 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 ))
 \Gin@req@height=\dimen126
 \Gin@req@width=\dimen127
-) (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.aux)
-\openout1 = `"COMP 551 Project 2 Report.aux"'.
+) (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/Untitled.aux)
+\openout1 = `Untitled.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 312.
 LaTeX Font Info:    ... okay on input line 312.
@@ -195,22 +195,23 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 )) <class_distribution.png, id=1, 462.528pt x 346.896pt>
 File: class_distribution.png Graphic file (type png)
  <use class_distribution.png>
-Package pdftex.def Info: class_distribution.png used on input line 386.
+Package pdftex.def Info: class_distribution.png used on input line 384.
 (pdftex.def)             Requested size: 199.16928pt x 149.37938pt.
+ <confusion_bayes.png, id=3, 568.0422pt x 463.2507pt>
+File: confusion_bayes.png Graphic file (type png)
+ <use confusion_bayes.png>
+Package pdftex.def Info: confusion_bayes.png used on input line 398.
+(pdftex.def)             Requested size: 227.62204pt x 185.62921pt.
  [1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./class_distribution.png>] <confusion_bayes.png, id=11, 568.0422pt x 463.2507pt>
-File: confusion_bayes.png Graphic file (type png)
- <use confusion_bayes.png>
-Package pdftex.def Info: confusion_bayes.png used on input line 400.
-(pdftex.def)             Requested size: 227.62204pt x 185.62921pt.
+ <./class_distribution.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 511.
+(Font)              <8> on input line 509.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 511.
+(Font)              <6> on input line 509.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 511.
+(Font)              <5> on input line 509.
 
 
 ** Conference Paper **
@@ -225,17 +226,17 @@ Before submitting the final camera ready copy, remember to:
 
 [2
 
- <./confusion_bayes.png>] (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.aux) ) 
+ <./confusion_bayes.png>] (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/Untitled.aux) ) 
 Here is how much of TeX's memory you used:
  2333 strings out of 492995
- 39431 string characters out of 6132704
+ 39276 string characters out of 6132704
  105771 words of memory out of 5000000
  5881 multiletter control sequences out of 15000+600000
  35447 words of font info for 69 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 39i,7n,25p,834b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,7n,25p,774b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.pdf" (2 pages, 167784 bytes).
+Output written on /Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/Untitled.pdf (2 pages, 166652 bytes).
 PDF statistics:
  25 PDF objects out of 1000 (max. 8388607)
  14 compressed objects within 1 object stream

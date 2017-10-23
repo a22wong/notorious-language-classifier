@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def main():
     # training_x = '../Data/train_set_x.csv'
-    training_x = '../Data/training_x_utf8.csv'
+    training_x = '../Data/train_set_x_utf8.csv'
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
 
@@ -22,18 +22,17 @@ def main():
     dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, testing_x)
     
     # special character stuff
-    special_chars = getSpecialCharsLong(training_x, dataset_y)
-    # special_chars = getSpecialCharsShort(dataset_x, dataset_y)
-    # classified_sc = classifySpecialChars(special_chars)
-    classified_unique_sc = getUniqueSets(special_chars)
-
+    # special_chars = getSpecialCharsLong(training_x, dataset_y)
+    special_chars = getSpecialCharsShort(dataset_x, dataset_y)
+    classified_sc = classifySpecialChars(special_chars)
+    # classified_unique_sc = getUniqueSets(special_chars)
 
     # probabilities
     probability_of_classes = probability_class(dataset_y)
     probability_of_languages = probability_languages(dataset_x, dataset_y)
     
     # make predicitons!
-    predictions = classify(dataset_x, classified_unique_sc, probability_of_languages, probability_of_classes)
+    predictions = classify(dataset_x, classified_sc, probability_of_languages, probability_of_classes)
 
     truth = [el[1] for el in dataset_y[1:]]
     # print(truth[:10])
@@ -98,7 +97,8 @@ def getSpecialCharsShort(dataset_x, dataset_y):
         sys.stdout.write("\rProgress: %d" % (i))
         sys.stdout.flush()
         for j in range(len(dataset_x[i][1])):
-            if re.match(unicode_regex, dataset_x[i][1][j]):
+            # if re.match(unicode_regex, dataset_x[i][1][j]):
+            if ord(dataset_x[i][1][j]) > 190:
                 if dataset_x[i][1][j] in special_chars_short:
                     if dataset_y[i][1] in special_chars_short[dataset_x[i][1][j]]:
                         pass
@@ -256,6 +256,22 @@ def classify(testset_x, classified_sc, probability_of_languages, probability_of_
                                 guess_count += 1
                                 total_tests_with_sc += 1
                                 break
+                            else:
+                                for sc3 in classified_sc[0]:
+                                    if sc3 in testset[test_line]:
+                                        temp_guess = '0'
+                                        naive = 0
+                                        guess_count += 1
+                                        total_tests_with_sc += 1
+                                        break
+                                    else:
+                                        for sc3 in classified_sc[4]:
+                                            if sc3 in testset[test_line]:
+                                                temp_guess = '4'
+                                                naive = 0
+                                                guess_count += 1
+                                                total_tests_with_sc += 1
+                                                break
         if naive == 1:
             for test_char in testset[test_line]:
                 for l in range(0, len(probability_of_languages)):

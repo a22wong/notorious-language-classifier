@@ -383,13 +383,15 @@ We found that the data required little pre-processing as non-discriminative symb
 As mentioned, the test set is a string of characters. Because of this, we chose to train our classifiers on the probability of characters appearing rather than the probability of words or small groups of words appearing. We lost a lot of the natural language data by making our features individual characters, but this seemed to be the only reasonable solution for this unique problem. 
 
 \subsection{Decision Tree}
-Data preprocessing required to design our decision tree included identifying all special characters, which we did so by regular expression, matching any non-ASCII character. Next was to classify the special characters to the language they were unique to. Special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria. However, due to failure to properly implement a program that properly identified special characters, we were unable to fully test the potential of this method.
+With a 'unexpected' test set of only single characters, we decided to try using a Decision Tree to discriminate test data based on what special characters appeared, and default to a Naive Bayes approach when no special characters appeared. Initial data pre-processing required included identifying all special characters, which we did so by regular expression matching any non-ASCII character. We found there to be 613 non-ASCII characters present in the training set; later this will shown to be too large to use for classification in limited processing time.
 
-The encountered issue was with unicode encoding, and we suspect specifically with 8 vs 16 bit encoding for special characters that, in the given dataset, actually are two chars in line; for example, the character \texttt{\`{a}} is given by the unicode sequence \texttt{0xc3} and \texttt{0xa0}.
+Next was to classify the special characters to the language they were unique to. Special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria. However, due to failure to properly implement a program that properly identified special characters, we were unable to implement a Decision Tree algorithm 
 
-In designing the Decision Tree, the goal was to have each node's evaluation criteria make the largest cut in the test set - in other words create the most separation - to effectively filter the test data.
+The initial set of 613 special characters was far too large, reporting over 200 special characters unique to French alone. Attempting to implement the Decision Tree with this set of characters has a time complexity of \texttt{O(shcn)} where \texttt{s} is the number of special characters unique to the language being filtered at level \texttt{h} of the Decision Tree, for each character \texttt{c} in each test case \texttt{n}. On a commercial computer, it was making ~3 predictions a second, which would have required over a full day of computation.
 
+We tried to streamline the data pre-processing to find a better method without sucess. Specifically, the encountered issue was with unicode encoding, and we suspect specifically with 8 vs 16 bit encoding for special characters that, in the given dataset, actually are two chars in line; for example, the character \texttt{\`{a}} is given by the unicode sequence \texttt{0xc3} and \texttt{0xa0}.
 
+In designing the Decision Tree, the goal was to have each node's evaluation criteria make the largest cut in the test set - in other words create the most separation - to effectively filter the test data. So, assuming the training and test sets would have similar distributions of classes, we structured the tree to evaluate most likely languages first: French, Spanish, German, Polish, then Slovak.
 
 
 \begin{figure}[htbp]
@@ -414,9 +416,9 @@ Fig.~\ref{confusion_bayes} shows the confusion matrix for the Naive Bayes classi
 \end{figure}
 
 \subsection{Decision Tree}
-With a 'unexpected' test set of only single characters, we decided to try using a Decision Tree to discriminate test data based on what special characters appeared, and default to a Naive Bayes approach when no special characters appeared. The expected outcome was that of higher accuracy than Naive Bayes, as it essentially filters out test cases with special characters unique to their respective language. However, due to the special character decoding problem mentioned prior, we were unable to fully test the potential of this method.
+The expected outcome was that of higher accuracy than Naive Bayes, as it essentially filters out test cases with special characters unique to their respective language. However, due to the special character decoding problem mentioned prior, we were unable to fully test the potential of this method.
 
-For proof of concept, we did implement a incomplete method that lacked sufficient pre-processing of special characters, but out of the 118507 test cases, the Decision Tree only made a decision 148 times. Thus, the test accuracy and consequently the confusion matrix for the Decision Tree implementation is the same as that of Naive Bayes in Fig.~\ref{confusion_bayes} above.
+For proof of concept, we did implement an incomplete method that lacked sufficient pre-processing of special characters, but out of the 118507 test cases, the Decision Tree only made a decision 148 times - insignificant. Thus, the test accuracy and consequently the confusion matrix for the Decision Tree implementation is the same as that of Naive Bayes in Fig.~\ref{confusion_bayes} above.
 
 
 

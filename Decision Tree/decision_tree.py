@@ -13,7 +13,8 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 
 def main():
-    training_x = '../Data/train_set_x.csv'
+    # training_x = '../Data/train_set_x.csv'
+    training_x = '../Data/training_x_utf8.csv'
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
 
@@ -25,6 +26,7 @@ def main():
     # special_chars = getSpecialCharsShort(dataset_x, dataset_y)
     # classified_sc = classifySpecialChars(special_chars)
     classified_unique_sc = getUniqueSets(special_chars)
+
 
     # probabilities
     probability_of_classes = probability_class(dataset_y)
@@ -64,7 +66,7 @@ def loadCsv(training_x, training_y, testing_x):
 
     return dataset_x, dataset_y, testset_x
 
-def getSpecialChars(training_x, dataset_y):
+def getSpecialCharsLong(training_x, dataset_y):
     print "Getting special characters..."
 	# open training set with utf-8 encoding to indentify special chars
 	# special_chars: dictionary {key=special_char, value=list of associated languages}
@@ -245,6 +247,14 @@ def classify(testset_x, classified_sc, probability_of_languages, probability_of_
                         guess_count += 1
                         total_tests_with_sc += 1
                         break
+                    else:
+                        for sc2 in classified_sc[3]:
+                            if sc2 in testset[test_line]:
+                                temp_guess = '3'
+                                naive = 0
+                                guess_count += 1
+                                total_tests_with_sc += 1
+                                break
         if naive == 1:
             for test_char in testset[test_line]:
                 for l in range(0, len(probability_of_languages)):

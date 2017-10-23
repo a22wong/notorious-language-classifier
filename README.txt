@@ -1,4 +1,4 @@
-The Notorious Apple Pickers strike back as The Nororious Language Classifiers.
+The Notorious Apple Pickers strike back as The Notorious Language Classifiers.
 
 Below you will find an outline on how to run each of the classifiers:
 

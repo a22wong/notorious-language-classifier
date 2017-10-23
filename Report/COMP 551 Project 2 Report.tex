@@ -421,7 +421,13 @@ There's a total of 333277 instances of special characters in the training set. O
 
 
 \section{Discussion}
-asdf
+\subsection{Naive Bayes}
+Several attempts were made at achieving a higher score using the Naive Bayes classifier. The lower true positive rate of the Spanish classifications were of concern. To remedy this, a corpus of ~100,000 Spanish words was added to the training set. This did improve the Spanish rate, but lowered the French rate and overall accuracy of the classifier. In another attempt, a French corpus was added in conjunction with the Spanish corpus, but this led to a very similar result to the initial classifier.
+The log-likelihood was also calculated in an attempt to improve the classification score, but again there was little difference in the actual output at the expense of a much more complex calculation. Ultimately, the basic Naive Bayes seemed to perform best. Future work in this area will involve testing a Naive Bayes classifier available in a library like sklearn to see how the results compare to the one developed from scratch here. 
+
+\subsection{Decision Trees}
+\subsection{Extremely Randomized Trees}
+\subsection{Linear Discriminant Analysis} %% if you want to write about this David, i.e what went wrong with it
 
 
 \section{Statement of Contributions}

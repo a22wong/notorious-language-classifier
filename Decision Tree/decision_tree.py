@@ -21,8 +21,8 @@ def main():
     dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, testing_x)
     
     # special character stuff
-    # special_chars = getSpecialCharsLong(training_x, dataset_y)
-    special_chars = getSpecialCharsShort(dataset_x, dataset_y)
+    special_chars = getSpecialCharsLong(training_x, dataset_y)
+    # special_chars = getSpecialCharsShort(dataset_x, dataset_y)
     # classified_sc = classifySpecialChars(special_chars)
     classified_unique_sc = getUniqueSets(special_chars)
 
@@ -36,15 +36,15 @@ def main():
     truth = [el[1] for el in dataset_y[1:]]
     # print(truth[:10])
     # print(predictions[:10])
-    # confusion = confusion_matrix(truth, predictions)
+    confusion = confusion_matrix(truth, predictions)
 
-    # plt.figure()
-    # plot_confusion_matrix(confusion, classes=['Slovak', 'French', 'Spanish', 'German', 'Polish'], normalize=True, title='Confusion Matrix')
-    # print(confusion)
+    plt.figure()
+    plot_confusion_matrix(confusion, classes=['Slovak', 'French', 'Spanish', 'German', 'Polish'], normalize=True, title='Confusion Matrix')
+    print(confusion)
     correct = [i for i, j in zip(predictions, truth) if i == j]
     percent_correct = float(len(correct)) / float(len(predictions))
     print "Accuracy: "+str(percent_correct)
-    # plt.show()
+    plt.show()
 
 def loadCsv(training_x, training_y, testing_x):
     print "Loading from csv..."
@@ -211,40 +211,51 @@ def probability_languages(dataset_x, dataset_y):
 def classify(testset_x, classified_sc, probability_of_languages, probability_of_classes):
     print "Classifying..."
     guesses = []
+    guess_count = 0
+    total_tests_with_sc = 0
 
     testset = [[] for i in range(len(testset_x))]
 
     for i in range(1, len(testset_x)):
         testset[i] += testset_x[i][1]#.lower()
         testset[i] = [x for x in testset[i] if x != ' ']
-
+    
     for test_line in range(1, len(testset_x)):
-        sys.stdout.write("\rProgress: %d" % (test_line))
+        sys.stdout.write("\rProgress: %d" % (guess_count))
         sys.stdout.flush()
         temp_probability = probability_of_classes.copy()
         # classified_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
         naive = 1
+        temp_guess = ""
 
         # simplest approach
         # short list of SCs only has unique chars in french and spanish
-        for sc0 in classified_sc[2]:
+        for sc0 in classified_sc[1]:
             if sc0 in testset[test_line]:
-                guesses.append('2')
+                temp_guess = '1'
                 naive = 0
+                guess_count += 1
+                total_tests_with_sc += 1
+                break
             else:
-                for sc1 in classified_sc[1]:
+                for sc1 in classified_sc[2]:
                     if sc1 in testset[test_line]:
-                        guesses.append('1')
+                        temp_guess = '2'
                         naive = 0
-
-        if naive:
+                        guess_count += 1
+                        total_tests_with_sc += 1
+                        break
+        if naive == 1:
             for test_char in testset[test_line]:
-                for l in range(len(probability_of_languages)):
-                    if i in probability_of_languages[l]:
-                         temp_probability[str(l)] *= probability_of_languages[l][i]
+                for l in range(0, len(probability_of_languages)):
+                    if test_char.lower() in probability_of_languages[l]:
+                         temp_probability[str(l)] *= probability_of_languages[l][test_char]
                     else:
                         temp_probability[str(l)] *= probability_of_languages[l]['not_present']
             guesses.append(max(temp_probability, key=temp_probability.get))
+            guess_count += 1
+        else:
+            guesses.append(temp_guess)
 
 
 
@@ -255,6 +266,7 @@ def classify(testset_x, classified_sc, probability_of_languages, probability_of_
         for i in range(0, len(guesses)):
             writer.writerow([str(i)] + [guesses[i]])
 
+    print "Total tests with SCs: "+str(total_tests_with_sc)
     return guesses
 
 

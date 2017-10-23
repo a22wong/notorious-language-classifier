@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  22 OCT 2017 20:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 OCT 2017 08:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -145,7 +145,11 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen125
 \Gin@req@width=\dimen126
 )
-(./COMP 551 Project 2 Report.aux)
+(./COMP 551 Project 2 Report.aux
+
+LaTeX Warning: Label `confusion_bayes' multiply defined.
+
+)
 \openout1 = `"COMP 551 Project 2 Report.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 312.
@@ -242,14 +246,21 @@ Package pdftex.def Info: confusion_bayes.png used on input line 400.
 
 
 LaTeX Warning: Reference `confusion_decision_trees' on page 2 undefined on inpu
-t line 409.
+t line 410.
 
+<confusion_decision_tree.png, id=12, 578.16pt x 433.62pt>
+File: confusion_decision_tree.png Graphic file (type png)
+
+<use confusion_decision_tree.png>
+Package pdftex.def Info: confusion_decision_tree.png used on input line 415.
+(pdftex.def)             Requested size: 227.62204pt x 170.71231pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 516.
+(Font)              <8> on input line 524.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 516.
+(Font)              <6> on input line 524.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 516.
+(Font)              <5> on input line 524.
+
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -261,18 +272,20 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[2
-
- <./confusion_bayes.png>] (./COMP 551 Project 2 Report.aux)
+[2 <./confusion_bayes.png> <./confusion_decision_tree.png>]
+(./COMP 551 Project 2 Report.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 2300 strings out of 493089
- 38224 string characters out of 6134842
- 103804 words of memory out of 5000000
- 5781 multiletter control sequences out of 15000+600000
+ 2305 strings out of 493089
+ 38378 string characters out of 6134842
+ 103843 words of memory out of 5000000
+ 5785 multiletter control sequences out of 15000+600000
  36554 words of font info for 70 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  37i,7n,23p,834b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -280,10 +293,10 @@ Here is how much of TeX's memory you used:
 exlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
 5/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-di
 st/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "COMP 551 Project 2 Report.pdf" (2 pages, 178203 bytes).
+Output written on "COMP 551 Project 2 Report.pdf" (2 pages, 226222 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
+ 31 PDF objects out of 1000 (max. 8388607)
  17 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

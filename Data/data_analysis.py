@@ -15,9 +15,6 @@ def main():
     special_chars = getSpecialChars(training_x, dataset_y)
     # print special_chars
 
-    
-
-
     # special_chars_short = {}
     # for i in range(len(dataset_x)):
     # # for i in range(100):
@@ -34,11 +31,11 @@ def main():
 
     # print len(special_chars_short)
 
-    printCsv(special_chars_short)
+    # printCsv(special_chars)
     languages_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
-    for c in special_chars_short:
+    for c in special_chars:
         for l in languages_sc_counts:
-            if l in special_chars_short[c]:
+            if l in special_chars[c]:
                 languages_sc_counts[l] += 1
 
     print languages_sc_counts
@@ -90,6 +87,7 @@ def getSpecialChars(training_x, dataset_y):
     # special_chars: dictionary {key=special_char, value=list of associated languages}
     unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
     special_chars = {}
+    total_sc_count = 0
     with codecs.open(training_x, mode='r', encoding='utf-8') as data_x:
         line_nb = -1
         for line in data_x:
@@ -101,6 +99,7 @@ def getSpecialChars(training_x, dataset_y):
             # print line_nb
             for i in range(len(line)):
                 if re.match(unicode_regex, line[i]):
+                    total_sc_count += 1
                     if not line[i] in special_chars:
                         special_chars[line[i]] = [dataset_y[line_nb][1]]
                     else:
@@ -108,6 +107,7 @@ def getSpecialChars(training_x, dataset_y):
                             special_chars[line[i]].append(dataset_y[line_nb][1])
     data_x.close()
 
+    print "Total SCs: "+str(total_sc_count)
     return special_chars
 
 if __name__ == '__main__':

@@ -431,7 +431,9 @@ Several attempts were made at achieving a higher score using the Naive Bayes cla
 The log-likelihood was also calculated in an attempt to improve the classification score, but again there was little difference in the actual output at the expense of a much more complex calculation. Ultimately, the basic Naive Bayes seemed to perform best. Future work in this area will involve testing a Naive Bayes classifier available in a library like sklearn to see how the results compare to the one developed from scratch here. 
 
 \subsection{Decision Tree}
-Susceptible to errors in test set.
+Dealing with the encoding issues revealed many possible hurdles in pre-processing the data, and for evaluating the Decision Tree algorithm. If we had been able to properly decode the special characters, we might have been able to do better diagnostics to create a near-optimal tree structure, rather than the reality of implementing a pre-Naive Bayes filter.
+
+Because the planned implementation was to immediately filter a test case if it contained a character that mapped uniquely to one class, the Decision Tree would be extremely susceptible to errors in test set. Redundancies could have been included, such as by predicting the \texttt{argmax} of classes of special characters appearing in a test case.
 
 Though special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria, they could be utilized in a more robust, probabilistic method that used the  Bayesian probabilities calculated from special character sets alone, instead of just the training set.
 

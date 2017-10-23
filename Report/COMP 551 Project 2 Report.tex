@@ -379,7 +379,18 @@ The compiled training dataset contains 276516 labeled language samples from five
 
 We found that the data required little pre-processing as non-discriminative symbols such as punctuation had already been removed. To process the text, we chose to simply make all characters lowercase as to eliminate the classifier distinguishing between upper- and lower-case symbols. There are many blank lines in the training set, but we found eliminating them to have no effect on our outcome. Nothing is being assigned to a label in these blank lines, and therefore it does not add any weight to the prediction. We also looked into removing numbers from our training set as these have no attachment to language. However, as the corpora are taken from different sources, we decided that some sources may be more likely to include numbers in the dialogue and that we could exploit this distinction.
 
+\subsection{Naive Bayes}
 As mentioned, the test set is a string of characters. Because of this, we chose to train our classifiers on the probability of characters appearing rather than the probability of words or small groups of words appearing. We lost a lot of the natural language data by making our features individual characters, but this seemed to be the only reasonable solution for this unique problem. 
+
+\subsection{Decision Tree}
+Data preprocessing required to design our decision tree included identifying all special characters, which we did so by regular expression, matching any non-ASCII character. Next was to classify the special characters to the language they were unique to. Special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria. However, due to failure to properly implement a program that properly identified special characters, we were unable to fully test the potential of this method.
+
+The encountered issue was with unicode encoding, and we suspect specifically with 8 vs 16 bit encoding for special characters that, in the given dataset, actually are two chars in line; for example, the character \texttt{\`{a}} is given by the unicode sequence \texttt{0xc3} and \texttt{0xa0}.
+
+In designing the Decision Tree, the goal was to have each node's evaluation criteria make the largest cut in the test set - in other words create the most separation - to effectively filter the test data.
+
+
+
 
 \begin{figure}[htbp]
 \centering
@@ -402,20 +413,12 @@ Fig.~\ref{confusion_bayes} shows the confusion matrix for the Naive Bayes classi
 \label{confusion_bayes}
 \end{figure}
 
-\subsection{Decision Trees}
-With a 'nonsensical' test set of only single characters, we decided to try using a Decision Tree to discriminate test data based on what special characters appeared. Naive Bayes simply classified based on 
+\subsection{Decision Tree}
+With a 'unexpected' test set of only single characters, we decided to try using a Decision Tree to discriminate test data based on what special characters appeared, and default to a Naive Bayes approach when no special characters appeared. The expected outcome was that of higher accuracy than Naive Bayes, as it essentially filters out test cases with special characters unique to their respective language. However, due to the special character decoding problem mentioned prior, we were unable to fully test the potential of this method.
 
-Due to the time complexity of the decision tree implementation, the debugging process was slow and non-optimal  
+For proof of concept, we did implement a incomplete method that lacked sufficient pre-processing of special characters, but out of the 118507 test cases, the Decision Tree only made a decision 148 times. Thus, the test accuracy and consequently the confusion matrix for the Decision Tree implementation is the same as that of Naive Bayes in Fig.~\ref{confusion_bayes} above.
 
-Fig.~\ref{confusion_decision_trees} shows the confusion matrix for the Decision Tree classifier.
 
-There's a total of 333277 instances of special characters in the training set. Only 148 times in the training set did it make a difference
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=80mm]{confusion_decision_tree.png}
-\caption{Decision Trees confusion matrix.}
-\label{confusion_decision_trees}
-\end{figure}
 
 \subsection{Extremely Randomized Trees}
 
@@ -425,7 +428,14 @@ There's a total of 333277 instances of special characters in the training set. O
 Several attempts were made at achieving a higher score using the Naive Bayes classifier. The lower true positive rate of the Spanish classifications were of concern. To remedy this, a corpus of ~100,000 Spanish words was added to the training set. This did improve the Spanish rate, but lowered the French rate and overall accuracy of the classifier. In another attempt, a French corpus was added in conjunction with the Spanish corpus, but this led to a very similar result to the initial classifier.
 The log-likelihood was also calculated in an attempt to improve the classification score, but again there was little difference in the actual output at the expense of a much more complex calculation. Ultimately, the basic Naive Bayes seemed to perform best. Future work in this area will involve testing a Naive Bayes classifier available in a library like sklearn to see how the results compare to the one developed from scratch here. 
 
-\subsection{Decision Trees}
+\subsection{Decision Tree}
+Susceptible to errors in test set.
+
+Though special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria, they could be utilized in a more robust, probabilistic method that used the  Bayesian probabilities calculated from special character sets alone, instead of just the training set.
+
+Ultimately, even if the Decision Tree method was more effective, it is essentially a data pre-processing step prior to Naive Bayes. 
+
+
 \subsection{Extremely Randomized Trees}
 \subsection{Linear Discriminant Analysis} %% if you want to write about this David, i.e what went wrong with it
 

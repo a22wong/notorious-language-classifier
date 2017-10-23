@@ -70,7 +70,8 @@ def getSpecialCharsLong(training_x, dataset_y):
     print "Getting special characters..."
 	# open training set with utf-8 encoding to indentify special chars
 	# special_chars: dictionary {key=special_char, value=list of associated languages}
-    unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
+    unicode_regex = re.compile('[^\x00-\x7F]')
+    # unicode_regex = 
     special_chars = {}
     with codecs.open(training_x, mode='r', encoding='utf-8') as data_x:
         line_nb = -1

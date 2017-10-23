@@ -331,14 +331,14 @@ thomas.page@mail.mcgill.ca\\
 260771672}
 \and
 \IEEEauthorblockN{David Tamrazov}
-\IEEEauthorblockA{School of Computer Science\\
+\IEEEauthorblockA{Computer Science, Arts\\
 McGill University\\
 Montreal, Canada\\
 david.tamrazov@mail.mcgill.ca\\
 260561439}
 \and
 \IEEEauthorblockN{Alexander Wong}
-\IEEEauthorblockA{School of Computer Science\\
+\IEEEauthorblockA{Cognitive Science, Arts and Science\\
 McGill University\\
 Montreal, Canada\\
 alexander.wong4@mail.mcgill.ca\\
@@ -403,6 +403,18 @@ Fig.~\ref{confusion_bayes} shows the confusion matrix for the Naive Bayes classi
 \end{figure}
 
 \subsection{Decision Trees}
+With a 'nonsensical' test set of only single characters, we decided to try using a Decision Tree to discriminate test data based on what special characters appeared. Naive Bayes simply classified based on 
+
+Due to the time complexity of the decision tree implementation, the debugging process was slow and non-optimal  
+
+Fig.~\ref{confusion_decision_trees} shows the confusion matrix for the Decision Tree classifier.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=80mm]{confusion_bayes.png}
+\caption{Naive Bayes confusion matrix.}
+\label{confusion_bayes}
+\end{figure}
 
 \subsection{Extremely Randomized Trees}
 

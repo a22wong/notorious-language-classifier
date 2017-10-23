@@ -9,18 +9,36 @@ def main():
     training_x = '../Data/train_set_x.csv'
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
-
+    # regex for non-ascii chars
+    unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
     dataset_x, dataset_y, testset_x= loadCsv(training_x, training_y, testing_x)
     special_chars = getSpecialChars(training_x, dataset_y)
     # print special_chars
-    # regex for non-ascii chars
-    unicode_regex = re.compile('[^\x00-\x7F]', re.IGNORECASE)
 
-    printCsv(special_chars)
+    
+
+
+    # special_chars_short = {}
+    # for i in range(len(dataset_x)):
+    # # for i in range(100):
+    #     for j in range(len(dataset_x[i][1])):
+    #         if re.match(unicode_regex, dataset_x[i][1][j]):
+    #             if dataset_x[i][1][j] in special_chars_short:
+    #                 if dataset_y[i][1] in special_chars_short[dataset_x[i][1][j]]:
+    #                     pass
+    #                 else:
+    #                     special_chars_short[dataset_x[i][1][j]].append(dataset_y[i][1])
+    #             else:
+    #                 special_chars_short[dataset_x[i][1][j]] = [dataset_y[i][1]]
+    #                 print dataset_x[i][1][j]#.decode('utf-8')
+
+    # print len(special_chars_short)
+
+    printCsv(special_chars_short)
     languages_sc_counts = {'0':0, '1':0,'2':0,'3':0,'4':0}
-    for c in special_chars:
+    for c in special_chars_short:
         for l in languages_sc_counts:
-            if l in special_chars[c]:
+            if l in special_chars_short[c]:
                 languages_sc_counts[l] += 1
 
     print languages_sc_counts

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  22 OCT 2017 14:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2017 14:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -192,7 +192,11 @@ Package grfext Info: Graphics extension search list:
 (grfext)             \AppendGraphicsExtensions on input line 456.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-)) <class_distribution.png, id=1, 462.528pt x 346.896pt>
+))
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+ <class_distribution.png, id=1, 462.528pt x 346.896pt>
 File: class_distribution.png Graphic file (type png)
  <use class_distribution.png>
 Package pdftex.def Info: class_distribution.png used on input line 386.
@@ -200,17 +204,16 @@ Package pdftex.def Info: class_distribution.png used on input line 386.
  [1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./class_distribution.png>] <confusion_bayes.png, id=11, 568.0422pt x 463.2507pt>
+ <./class_distribution.png>] <confusion_bayes.png, id=10, 568.0422pt x 463.2507pt>
 File: confusion_bayes.png Graphic file (type png)
  <use confusion_bayes.png>
 Package pdftex.def Info: confusion_bayes.png used on input line 400.
 (pdftex.def)             Requested size: 227.62204pt x 185.62921pt.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 511.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 511.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 511.
+ <confusion_decision_tree.png, id=11, 578.16pt x 433.62pt>
+File: confusion_decision_tree.png Graphic file (type png)
+ <use confusion_decision_tree.png>
+Package pdftex.def Info: confusion_decision_tree.png used on input line 415.
+(pdftex.def)             Requested size: 227.62204pt x 170.71231pt.
 
 
 ** Conference Paper **
@@ -223,22 +226,20 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[2
-
- <./confusion_bayes.png>] (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.aux) ) 
+[2 <./confusion_bayes.png> <./confusion_decision_tree.png>] (/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.aux) ) 
 Here is how much of TeX's memory you used:
- 2333 strings out of 492995
- 39431 string characters out of 6132704
- 105771 words of memory out of 5000000
- 5881 multiletter control sequences out of 15000+600000
- 35447 words of font info for 69 fonts, out of 8000000 for 9000
+ 2321 strings out of 492995
+ 39422 string characters out of 6132704
+ 106779 words of memory out of 5000000
+ 5876 multiletter control sequences out of 15000+600000
+ 30804 words of font info for 60 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  39i,7n,25p,834b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.pdf" (2 pages, 167784 bytes).
+Output written on "/Users/thomas/Documents/GitHub/notorious-language-classifier/Report/.texpadtmp/COMP 551 Project 2 Report.pdf" (2 pages, 215858 bytes).
 PDF statistics:
- 25 PDF objects out of 1000 (max. 8388607)
+ 27 PDF objects out of 1000 (max. 8388607)
  14 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

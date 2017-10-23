@@ -5,8 +5,7 @@ import seaborn
 
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.feature_extraction.text import CountVectorizer 
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
+
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import make_scorer
@@ -18,6 +17,9 @@ def main():
     # training_data = read_csv('../Data/train_set_x.csv')
     # training_labels = read_csv('../Data/train_set_y.csv', labels=True)
 
+
+    print("Reading testing data...")
+    
     # Testing data to record predictions 
     test_data = read_csv('/Users/Dave/Documents/Uni_Work/COMP_551/notorious-language-classifier/Data/test_set_x.csv')
     
@@ -45,39 +47,88 @@ def main():
 
     print("Running cross validation ...")
 
-    pipe = Pipeline([
-        ('reduce_dim', PCA()),
-        ('classify', ExtraTreesClassifier())
-    ])
-
-    n_estimators = [20, 40, 60, 80, 100]
-    n_features = [1, 5, 10, 15, 20]
+    n_estimators = [20, 60, 100, 140, 180]
 
     # Number of estimators to try in cross validation parameters search
-    search_parameters = [
+    param_grid = [
         {
-            'n_estimators': n_estimators,
-            'reduce_dim': [PCA(iterated_power='7')]
+            # 'reduce_dim__n_components': n_components,
+            'n_estimators': n_estimators
         }
     ]
 
     # cross validation search for best number of estimators hyperparameter in Extra Randomized Trees
-    ert = GridSearchCV(ExtraTreesClassifier(), search_parameters, cv=3, scoring=make_scorer(accuracy_score), n_jobs=-1)
-    ert.fit(training_X, training_labels)
+    grid = GridSearchCV(ExtraTreesClassifier(), param_grid=param_grid, cv=3, scoring=make_scorer(accuracy_score), n_jobs=-1)
+    grid.fit(training_X, training_labels)
 
     print("The best estimator was:")
-    print(ert.best_estimator_)
     
-    print("With accuracy: {}".format(ert.best_score_))
+    print(grid.best_estimator_)
+    
+    print("With accuracy: {}".format(grid.best_score_))
+
+
+    print("Printing graph data...")
+
+    print_graphs(grid, training_X, training_labels, n_estimators)
+
 
     print("Making test set predictions and writing to file...")
-    best_predictions = ert.predict(test_X)
+
+    best_predictions = grid.predict(test_X)
 
     write_predictions_to_file(best_predictions)
 
+
     print("Finished writing to file.")
 
+
+def print_confusion_matrix(y_actual, y_pred):
     
+    # Print the confusion matrix 
+    cnf_matrix = confusion_matrix(y_actual, y_pred)
+
+    
+    np.set_printoptions(precision=2)  
+
+    seaborn.heatmap(cnf_matrix)
+    plt.show()
+    plt.close(plt.figure())
+    
+
+def print_estimator_graph(validation_scores, training_scores, estimators):
+    
+    plt.figure(figsize=(10,6))
+    plt.plot(estimators, validation_scores, 'o-', "g")
+    plt.plot(estimators, training_scores, 'o-', color="r") 
+
+    plt.title("The Effect that the Quantity of Estimators in an Extremely Randomized Tree has on Accuracy")
+    plt.yscale('linear')
+
+    plt.xlabel("Number of Estimators")
+    plt.ylabel("Model Accuracy")
+    plt.legend(["Validation Accuracy", "Training Accuracy"])
+    plt.show()
+
+
+        
+def print_graphs(grid, training_data, training_labels, n_estimators):
+
+    results = grid.cv_results_
+
+    class_names = [ "Slovak", "French", "Spanish", "Polish" ]
+
+    # Print the confusion matrix
+    print_confusion_matrix(training_labels, grid.predict(training_data))
+
+    # Print the graphs comparing the results of different numbers of estimators
+    print_estimator_graph(results['mean_test_score'], results['mean_train_score'], n_estimators)
+
+
+
+
+
+
 def write_predictions_to_file(predictions):
     
     with open("test_set_y.csv", 'w') as f:
@@ -105,7 +156,7 @@ def read_csv(filepath, labels=False):
             
             # counter += 1
             
-            # if (counter == 1000):
+            # if (counter == 10000):
             #     break
 
             # split the row 

@@ -373,7 +373,6 @@ As a result of the first project, corpora in various languages are available to 
 \section{Related Work}
 Naive Bayes was chosen as the most promising text classification method for this application based on a previous study in this area. In his master’s thesis, Jason Rennie used a Naive Bayes classifier to classify a given news article into 1 of 20 different categories (e.g. Electronics, Religion, Space, etc.). Training on 1000 documents from each category, the Naive Bayes classifier was able to classify the new articles very well ~\cite{Rennie}. The main difference between that task and this project is that rather than distinguishing between categories, we will be distinguishing between languages, but the same concept applies. 
 
-
 \section{Problem Representation}
 The compiled training dataset contains 276516 labeled language samples from five different languages: Slovak, French, Spanish, German, and Polish. The test set contains 118507 unlabeled samples of zero to ten individual characters. This presented the challenge of classifying seemingly nonsensical data; a common task in practical machine learning. Fig.~\ref{class_distribution} represents the weight of each language in the training set. 
 
@@ -418,6 +417,21 @@ There's a total of 333277 instances of special characters in the training set. O
 \end{figure}
 
 \subsection{Extremely Randomized Trees}
+Given that the corpus was uncultured and drew from 5 different languages, we expected variance to be high in the data set. With that in mind we sought to implement a classifier that would trade off variance for a heavier bias, and found Extremely Randomized Trees to be a good fit in that regard. The classifier program made heavy use of the sklearn Python libraries. When read in, the each line of the prediction data is stripped of substrings that pattern match on emojis, pictographs, and other symbols that would be common across all languages, to further reduce variance in the data set. In such a way we read train_set_x.csv, train_set_y.csv, and test_set_x.csv into 3 separate lists, denoted ‘training_X’, ‘training_labels’, and ‘test_X’ respectively.
+
+An instance of sklearn’s CountVectorizer() is used to extract the features from the data. The CountVectorizer()’s “analyzer” option is set to ‘char’ to extract a vocabulary from individual characters, rather than individual words, to better mirror the test data.
+
+The training data is then passed to CountVectorizer().fit(), where CountVectorizer() extracts a vocabulary from all the documents and stores it. Passing training data and test data (not the training_labels) to the CountVectorizer.transform() will then return vectorized features of the training data, the training labels, and the test data.
+Training itself is done through 3-fold cross validation, during which we determine the optimum hyper parameter setting for our learner. We searched for an optimal number of estimators to use for the extremely randomized tree’s classifier. We tested [20, 60, 100, 140, 180] to get a good idea of how accuracy and overfitting scale with the number of estimators.
+
+The confusion matrix for the Extremely Randomized Trees classifier can be seen below. All in all the training_data created a vocabulary of 4103 words. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=80mm]{confusion_ert.png}
+\caption{Extremely Randomized Trees Confusion Matrix.}
+\label{confusion_extremely_randomized_trees}
+\end{figure}
 
 
 \section{Discussion}
@@ -426,8 +440,10 @@ Several attempts were made at achieving a higher score using the Naive Bayes cla
 The log-likelihood was also calculated in an attempt to improve the classification score, but again there was little difference in the actual output at the expense of a much more complex calculation. Ultimately, the basic Naive Bayes seemed to perform best. Future work in this area will involve testing a Naive Bayes classifier available in a library like sklearn to see how the results compare to the one developed from scratch here. 
 
 \subsection{Decision Trees}
+
+
 \subsection{Extremely Randomized Trees}
-\subsection{Linear Discriminant Analysis} %% if you want to write about this David, i.e what went wrong with it
+
 
 
 \section{Statement of Contributions}
@@ -435,7 +451,7 @@ Thomas was responsible for fully implementing the Naive Bayes classifier. He als
 
 Alex was responsible for fully implementing the Decision Trees classifier. For the report, he wrote any sections pertaining to Decision Trees.
 
-David was responsible for the LDA and Extremely Randomized Trees classifiers. For the report, he wrote any sections pertaining to LDA or Extremely Randomized Trees.
+David was responsible for the Extremely Randomized Trees classifiers. For the report, he wrote any sections pertaining to LDA or Extremely Randomized Trees.
 
 We hereby state that all the work presented in this report is that of the authors.
 

@@ -10,7 +10,9 @@ def main():
     training_y = '../Data/train_set_y.csv'
     testing_x = '../Data/test_set_x.csv'
 
-    dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, testing_x)
+    current_prediction_set = testing_x
+
+    dataset_x, dataset_y, testset_x = loadCsv(training_x, training_y, current_prediction_set)
     # print type(dataset_y[1])
 
     probability_of_classes = probability_class(dataset_y)
@@ -49,7 +51,7 @@ def loadCsv(training_x, training_y, testing_x):
 
 def count_words(words):
     # Changing this line affects output:
-    wc = {'not_present': 0.0}
+    wc = {'not_present': 1.0}  # change to 1.0 if using log
     for word in words:
         wc[word] = wc.get(word, 0.0) + 1.0
 
@@ -75,11 +77,11 @@ def probability_class(dataset_y):
 
 
 def probability_languages(dataset_x, dataset_y):
-    slovak = []    # 0
-    french = []    # 1
-    spanish = []   # 2
-    german = []    # 3
-    polish = []    # 4
+    slovak = []     # 0
+    french = []     # 1
+    spanish = []    # 2
+    german = []     # 3
+    polish = []     # 4
 
     for i in range(1, len(dataset_x)):
         if dataset_y[i][1] == '0':
@@ -135,7 +137,7 @@ def classifier(testset_x, probability_of_languages, probability_of_classes):
         for l in range(0, len(probability_of_languages)):
             for i in okay[m]:
                 if i in probability_of_languages[l]:
-                    temp_probability[str(l)] *= probability_of_languages[l][i]
+                    temp_probability[str(l)] *= probability_of_languages[l][i]  # l: lang, i: char
                 else:
                     temp_probability[str(l)] *= probability_of_languages[l]['not_present']
 

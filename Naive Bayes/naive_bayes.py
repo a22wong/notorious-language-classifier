@@ -3,7 +3,6 @@
 # October 2017
 
 import csv
-import itertools
 
 
 def main():

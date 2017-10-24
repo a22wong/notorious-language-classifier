@@ -438,27 +438,36 @@ The confusion matrix for the Extremely Randomized Trees classifier can be seen b
 \label{confusion_extremely_randomized_trees}
 \end{figure}
 
+The data appears to almost uniformly be plit between the five classes. Given that I know this to not be true, one estimate could be that because the vocabulary is built around single-letter words to suit the test data, so there is only so much variance between languages that share the alphabet. 
+
 
 \section{Discussion}
 \subsection{Naive Bayes}
 Several attempts were made at achieving a higher score using the Naive Bayes classifier. The lower true positive rate of the Spanish classifications were of concern. To remedy this, a corpus of ~100,000 Spanish words was added to the training set. This did improve the Spanish rate, but lowered the French rate and overall accuracy of the classifier. In another attempt, a French corpus was added in conjunction with the Spanish corpus, but this led to a very similar result to the initial classifier.
 The log-likelihood was also calculated in an attempt to improve the classification score, but again there was little difference in the actual output at the expense of a much more complex calculation. Ultimately, the basic Naive Bayes seemed to perform best. Future work in this area will involve testing a Naive Bayes classifier available in a library like sklearn to see how the results compare to the one developed from scratch here. 
 
-<<<<<<< HEAD
-\subsection{Decision Trees}
-=======
 \subsection{Decision Tree}
 Dealing with the encoding issues revealed many possible hurdles in pre-processing the data, and for evaluating the Decision Tree algorithm. If we had been able to properly decode the special characters, we might have been able to do better analytics of the special characters to create a more-optimal tree structure, rather than the reality of implementing a pre-Naive Bayes filter.
 
 Regardless of the failed implementation, this filter-by-special-character approach has inherent weaknesses. Because the planned implementation was to immediately filter a test case if it contained a character that mapped uniquely to one class, the Decision Tree would be extremely susceptible to errors in test set. Redundancies could have been included, such as by predicting the \texttt{argmax} of classes of special characters appearing in a test case. Also, though special characters that mapped to more than one language were not used in the Decision Tree evaluation criteria, they could be utilized in a more robust, probabilistic method that used the  Bayesian probabilities calculated from special character sets alone, instead of just the training set.
 
 Ultimately, even if the Decision Tree method was more effective, it is in practice a data pre-processing step that augments Naive Bayes, or which ever classification algorithm that would be used for the base case. 
->>>>>>> 8ccc5882b497e872784981224e4f21b8427f73fd
 
 
 \subsection{Extremely Randomized Trees}
 
+The cross validation returned the optimum number of estimators to be 180 out of what was provided. This could indicate a preference for more indicators to overfit the data with when variance is high as in a situation like this. 
 
+An optimizer with 180 estimators was able to gain a training accuracy of 97%, as seen by the figure below. The algorithm performs significanctly worse with the test data, leading us to the conclusion that the Extremely Randomized Trees still overfit.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=80mm]{best_estimator.png}
+\caption{Report of the best estimator from GridCV crossvalidation}
+\label{confusion_extremely_randomized_trees}
+\end{figure}
+
+Even though steps were taken to reduce the common vocabulary between languages, like removing all emoticons in pre processing, the classifier still lacked enough bias to make strongly accurate predictions in a generalized setting.
 
 \section{Statement of Contributions}
 Thomas was responsible for fully implementing the Naive Bayes classifier. He also wrote the Introduction, Related Work, and Problem Representation sections of the report as well as any sections pertaining to Naive Bayes.

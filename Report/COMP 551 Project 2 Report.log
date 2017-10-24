@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 OCT 2017 19:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 OCT 2017 20:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -223,11 +223,14 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 390.
 
+LaTeX Warning: Citation `Rennie' on page 1 undefined on input line 374.
+
+
+LaTeX Warning: Reference `class_distribution' on page 1 undefined on input line
+ 377.
+
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 389.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -235,20 +238,42 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 
 
 ]
-<class_distribution.png, id=9, 462.528pt x 346.896pt>
+<class_distribution.png, id=10, 462.528pt x 346.896pt>
 File: class_distribution.png Graphic file (type png)
 
 <use class_distribution.png>
-Package pdftex.def Info: class_distribution.png used on input line 399.
+Package pdftex.def Info: class_distribution.png used on input line 398.
 (pdftex.def)             Requested size: 199.16928pt x 149.37938pt.
 
-<confusion_bayes.png, id=11, 568.0422pt x 463.2507pt>
+
+LaTeX Warning: Reference `confusion_bayes' on page 2 undefined on input line 40
+8.
+
+<confusion_bayes.png, id=12, 568.0422pt x 463.2507pt>
 File: confusion_bayes.png Graphic file (type png)
 
 <use confusion_bayes.png>
-Package pdftex.def Info: confusion_bayes.png used on input line 413.
+Package pdftex.def Info: confusion_bayes.png used on input line 412.
 (pdftex.def)             Requested size: 227.62204pt x 185.62921pt.
- [2 <./class_distribution.png> <./confusion_bayes.png>]
+
+
+LaTeX Warning: Reference `confusion_bayes' on page 2 undefined on input line 42
+0.
+
+[2 <./class_distribution.png> <./confusion_bayes.png>]
+<confusion_ert.png, id=18, 573.14125pt x 470.75874pt>
+File: confusion_ert.png Graphic file (type png)
+ <use confusion_ert.png>
+Package pdftex.def Info: confusion_ert.png used on input line 436.
+(pdftex.def)             Requested size: 227.62204pt x 186.96408pt.
+
+<best_estimator.png, id=19, 579.16376pt x 146.5475pt>
+File: best_estimator.png Graphic file (type png)
+ <use best_estimator.png>
+Package pdftex.def Info: best_estimator.png used on input line 465.
+(pdftex.def)             Requested size: 227.62204pt x 57.59604pt.
+
+[3 <./confusion_ert.png> <./best_estimator.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -260,25 +285,33 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3
+[4
 
-] (./COMP 551 Project 2 Report.aux) ) 
+] (./COMP 551 Project 2 Report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2316 strings out of 493089
- 38520 string characters out of 6134842
- 104804 words of memory out of 5000000
- 5801 multiletter control sequences out of 15000+600000
- 31319 words of font info for 62 fonts, out of 8000000 for 9000
+ 2328 strings out of 493089
+ 38777 string characters out of 6134842
+ 104785 words of memory out of 5000000
+ 5810 multiletter control sequences out of 15000+600000
+ 32426 words of font info for 63 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  37i,7n,23p,834b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/
-enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/couri
-er/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "COMP 551 Project 2 Report.pdf" (3 pages, 184974 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on "COMP 551 Project 2 Report.pdf" (4 pages, 304205 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 43 PDF objects out of 1000 (max. 8388607)
+ 24 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
